@@ -1,0 +1,37 @@
+{
+  "name": "tezos-boilerplate-ligo-mocha",
+  "version": "0.1.0",
+  "description": "Boilerplate for developing Tezos smart contracts with Pascal Ligo and testing them with Ligo CLI & Mocha",
+  "scripts": {
+    "compile": "bash ./scripts/ligo.sh compile",
+    "compile:all": "bash ./scripts/ligo.sh compile_all \"./src/contracts\"",
+    "compile:all:watch": "bash ./scripts/ligo.sh compile_all_watch \"./src/contracts\"",
+    "_test:spec": "mocha \"src/**/*.test.js\" --opts mocha.opts -t 100000",
+    "_test:dot": "npm run _test:spec -- --reporter dot -t 100000",
+    "test": "npm run _test:spec",
+    "test:watch": "npm run _test:spec -- --watch",
+    "_git:pre-commit": "npm-run-all compile:all test",
+    "_git:pre-push": "npm-run-all compile:all test"
+  },
+  "keywords": [],
+  "author": "Neil Russell <neilrussell6@gmail.com>",
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run _git:pre-commit",
+      "pre-push": "npm run _git:pre-push"
+    }
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "husky": "^4.0.6",
+    "js-parametrize": "0.0.2",
+    "mocha": "^7.0.0",
+    "npm-run-all": "^4.1.5",
+    "sinon": "^8.0.4"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2"
+  }
+}
