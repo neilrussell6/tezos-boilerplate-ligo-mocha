@@ -42,7 +42,7 @@ describe('participator', () => {
       // ... should succeed
       // ... adding the participant
       // ... with the provided amount as their initial value
-      const expected = `( [] , {participants = big_map[ @"${user1Address}" -> {name = "ONE" , balance = 5mutez} ; @"${user2Address}" -> {name = "${name}" , balance = ${amountMutez}mutez} ] , owner = @"${ownerAddress}"} )`
+      const expected = `( [] , {participants = big_map[ address "${user1Address}" -> {name = "ONE" , balance = 5mutez} ; address "${user2Address}" -> {name = "${name}" , balance = ${amountMutez}mutez} ] , owner = address "${ownerAddress}"} )`
       assert.equal(result, expected)
     })
 
@@ -66,7 +66,7 @@ describe('participator', () => {
       await assert.isRejected(
         instance.call(params, config),
         Error,
-        /ligo: error of execution/,
+        'ERROR_CANNOT_ADD_DUPLICATE_PARTICIPANT',
       )
     })
 
@@ -89,7 +89,7 @@ describe('participator', () => {
       await assert.isRejected(
         instance.call(params, config),
         Error,
-        /ligo: error of execution/,
+        'ERROR_ONLY_OWNER_CAN_ADD_PARTICIPANT',
       )
     })
   })
@@ -118,7 +118,7 @@ describe('participator', () => {
       // ... should succeed
       // ... incrementing our participant value
       const expectedBalance = user1InitialBalance + amountMutez
-      const expected = `( [] , {participants = big_map[ @"${user1Address}" -> {name = "ONE" , balance = ${expectedBalance}mutez} ] , owner = @"${ownerAddress}"} )`
+      const expected = `( [] , {participants = big_map[ address "${user1Address}" -> {name = "ONE" , balance = ${expectedBalance}mutez} ] , owner = address "${ownerAddress}"} )`
       assert.equal(result, expected)
     })
 
@@ -140,7 +140,7 @@ describe('participator', () => {
       await assert.isRejected(
         instance.call(params, config),
         Error,
-        /ligo: error of execution/,
+        'ERROR_ONLY_REGISTERED_PARTICIPANTS_CAN_PARTICIPATE',
       )
     })
   })
